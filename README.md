@@ -20,7 +20,7 @@ Projeto Diario é uma aplicação desenvolvida no Senai Taguatinga utilizando Py
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/seu_usuario/projeto-diario.git
+    git clone https://github.com/henriqueserafin/projeto-diario.git
     ```
 
 2. Navegue até o diretório do projeto:
@@ -49,8 +49,9 @@ Projeto Diario é uma aplicação desenvolvida no Senai Taguatinga utilizando Py
 ## Uso
 
 1. Acesse a aplicação via navegador em `http://127.0.0.1:5000/`.
-2. Na página principal, você pode adicionar um novo diário de bordo utilizando o formulário disponível.
-3. As entradas são salvas automaticamente no banco de dados.
+2. Na página principal, você pode entrar como um aluno já cadastrado ou se cadastrar no banco de dados.
+3. Na página de adicionar um novo diário de bordo você prenche a caixa de texto utilizando o formulário disponível e seleciona enviar.
+4. As entradas são salvas automaticamente no banco de dados.
 
 ## Estrutura do Projeto
 
