@@ -4,12 +4,13 @@ import pymysql
 import urllib.parse
 from datetime import datetime
 
+
 app = Flask(__name__)
 app.secret_key = 'sai_da_venv_vei-Professor_Romulo-2024'  # Necessário para usar flash messages
 
 # Configurações do banco de dados
 user = 'root'
-password = urllib.parse.quote_plus('1234')  # Atualize com a senha do seu banco de dados
+password = urllib.parse.quote_plus('senai@123')  # Atualize com a senha do seu banco de dados
 host = 'localhost'
 database = 'schooltracker'  # Atualize com o nome do seu banco de dados
 connection_string = f'mysql+pymysql://{user}:{password}@{host}/{database}'
@@ -28,7 +29,6 @@ def diario():
 @app.route('/add_diario', methods=['POST'])
 def add_diario():
     texto = request.form.get("texto")
-    # Passei cerca de 2 horas por causa de datahora por não lembrar que ele era notnull 💀💀💀💀💀💀💀 
     datahora = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
     # pega as variaveis e joga no bd
@@ -105,5 +105,5 @@ def novoaluno():
         flash(f"Ocorreu um erro ao cadastrar o aluno: {e}")
         return redirect(url_for('cadastro'))
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+# if __name__ == '__main__':
+app.run(debug=True, port=5001)
