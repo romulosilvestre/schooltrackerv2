@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Alunos</title>
+</head>
+
+<body>
+    <h1>Lista de Alunos Cadastrados</h1>
+    {%if alunos%}
+    <table border="500">
+         <tr>  <!-- table row -->
+            <th>ra</th> <!-- table head -->
+            <th>nome</th>
+            <th>tempo estudo</th>
+            <th>renda familiar</th>
+        </tr>
+        {%for aluno in alunos%}
+        <tr>
+            <td>{{aluno.ra}}</td>
+            <td>{{aluno.nome}}</td>
+            <td>{{aluno.tempoestudo}}</td>
+            <td>{{aluno.rendafamiliar}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+    {%else%}
+        <p>Nenhum alunos cadastrado!</p>
+    {%endif%}
+</body>
+
+</html>

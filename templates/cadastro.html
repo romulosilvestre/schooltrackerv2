@@ -5,19 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastra-se</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylecadastro.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'stylecadastro.css')}}">
 </head>
 <body>
-    <!-- Exibir mensagens flash como popup -->
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <script>
-                alert("{{ messages[0] }}");
-            </script>
-        {% endif %}
-    {% endwith %}
-
-    <form action="/novoaluno" method="post"> 
+    <form action="/novoaluno" method="POST"> 
         <label>Nome: </label> 
         <input type="text" required placeholder="Nome" id="nome" name="nome"/> 
         <label>RA:</label> 
@@ -28,5 +19,6 @@
         <input type="number" placeholder="Renda familiar mensal" id="rendafamiliar" name="rendafamiliar"/>
         <button type="submit">Cadastrar</button>
     </form>
+    
 </body>
 </html>
