@@ -1,12 +1,15 @@
-# Projeto Diario
+# Projeto SchoolTracker
 
-Projeto Diario é uma aplicação desenvolvida no Senai Taguatinga utilizando Python e Flask. O objetivo do projeto é permitir a adição de estudantes a um banco de dados e possibilitar que cada estudante crie diários de bordo para registrar suas aulas, que também são armazenados no banco de dados.
+Projeto SchoolTracker é uma aplicação desenvolvida no Senai Taguatinga utilizando Python e Flask. O objetivo do projeto é permitir a adição de estudantes a um banco de dados, possibilitar a criação de diários de bordo para registrar as aulas, e permitir que os dados dos alunos sejam alterados ou removidos conforme necessário.
 
 ## Funcionalidades
 
 - Adicionar estudantes ao banco de dados.
 - Criar e armazenar diários de bordo para as aulas.
-- Interface simples para entrada de dados.
+- Listar todos os alunos cadastrados.
+- Editar informações de estudantes (RA, nome, tempo de estudo, renda familiar).
+- Remover estudantes do banco de dados.
+- Interface simples para entrada e manipulação de dados.
 
 ## Tecnologias Utilizadas
 
@@ -20,18 +23,19 @@ Projeto Diario é uma aplicação desenvolvida no Senai Taguatinga utilizando Py
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/henriqueserafin/projeto-diario.git
+    git clone https://github.com/henriqueserafin/projeto-schooltracker.git
     ```
 
 2. Navegue até o diretório do projeto:
     ```bash
-    cd projeto-diario
+    cd projeto-schooltracker
     ```
 
 3. Crie um ambiente virtual e ative-o:
     ```bash
     python -m venv venv
-    venv\Scripts\activate
+    venv\Scripts\activate  # No Windows
+    source venv/bin/activate  # No Linux/MacOS
     ```
 
 4. Instale as dependências:
@@ -39,7 +43,7 @@ Projeto Diario é uma aplicação desenvolvida no Senai Taguatinga utilizando Py
     pip install -r requirements.txt
     ```
 
-5. Configure o banco de dados MySQL com as credenciais adequadas no arquivo principal do projeto.
+5. Configure o banco de dados MySQL com as credenciais adequadas no arquivo principal do projeto (`app.py`).
 
 6. Execute a aplicação:
     ```bash
@@ -49,9 +53,9 @@ Projeto Diario é uma aplicação desenvolvida no Senai Taguatinga utilizando Py
 ## Uso
 
 1. Acesse a aplicação via navegador em `http://127.0.0.1:5001/`.
-2. Na página principal, você pode entrar como um aluno já cadastrado ou se cadastrar no banco de dados.
-3. Na página de adicionar um novo diário de bordo você prenche a caixa de texto utilizando o formulário disponível e seleciona enviar.
-4. As entradas são salvas automaticamente no banco de dados.
+2. Na página principal, você pode visualizar a lista de alunos cadastrados, adicionar novos alunos, editar informações existentes ou remover alunos do banco de dados.
+3. Para adicionar ou editar um aluno, utilize os formulários disponíveis nas respectivas páginas de cadastro e edição.
+4. As alterações são salvas automaticamente no banco de dados.
 
 ## Estrutura do Projeto
 
@@ -59,7 +63,7 @@ Projeto Diario é uma aplicação desenvolvida no Senai Taguatinga utilizando Py
 - `templates/`: Diretório que contém os arquivos HTML.
 - `static/`: Diretório para arquivos estáticos como CSS.
 
-# Diagrama de Sequência
+## Diagrama de Sequência
 
 ```mermaid
 sequenceDiagram
@@ -109,13 +113,3 @@ sequenceDiagram
     Flask->>DB: session.commit()
     DB-->>Flask: Confirmação de atualização
     Flask->>Browser: redirect(url_for('listar_alunos'))
-```
-
-
-## Contribuição
-
-Contribuições são bem-vindas! Sinta-se à vontade para enviar pull requests ou abrir issues para discussão.
-
-## Licença
-
-Este projeto está licenciado sob a [Apache License](LICENSE).
