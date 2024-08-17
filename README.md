@@ -31,7 +31,7 @@ Projeto Diario é uma aplicação desenvolvida no Senai Taguatinga utilizando Py
 3. Crie um ambiente virtual e ative-o:
     ```bash
     python -m venv venv
-    source venv/bin/activate  # No Windows use `venv\Scripts\activate`
+    venv\Scripts\activate
     ```
 
 4. Instale as dependências:
@@ -48,7 +48,7 @@ Projeto Diario é uma aplicação desenvolvida no Senai Taguatinga utilizando Py
 
 ## Uso
 
-1. Acesse a aplicação via navegador em `http://127.0.0.1:5000/`.
+1. Acesse a aplicação via navegador em `http://127.0.0.1:5001/`.
 2. Na página principal, você pode entrar como um aluno já cadastrado ou se cadastrar no banco de dados.
 3. Na página de adicionar um novo diário de bordo você prenche a caixa de texto utilizando o formulário disponível e seleciona enviar.
 4. As entradas são salvas automaticamente no banco de dados.
@@ -68,28 +68,47 @@ sequenceDiagram
     participant Flask as Servidor Flask
     participant DB as Banco de Dados
 
-    User->>Browser: Acessar "/"
+    User->>Browser: Acessa "/"
     Browser->>Flask: GET "/"
     Flask->>Browser: render_template("index.html")
 
-    User->>Browser: Acessar "/cadastro"
+    User->>Browser: Acessa "/cadastro"
     Browser->>Flask: GET "/cadastro"
     Flask->>Browser: render_template("cadastro.html")
 
-    User->>Browser: Submeter formulário de novo aluno
+    User->>Browser: Submete formulário de novo aluno
     Browser->>Flask: POST "/novoaluno"
-    Flask->>DB: Criar sessão com SQLAlchemy
-    Flask->>DB: session.add(aluno)
-    DB-->>Flask: Confirmação de inserção
+    Flask->>Flask: session.add(aluno)
     Flask->>DB: session.commit()
-    Flask->>Browser: render_template('listaalunos.html', mensagem="cadastrado com sucesso")
+    DB-->>Flask: Confirmação de inserção
+    Flask->>Browser: redirect(url_for('listar_alunos'))
 
-    User->>Browser: Acessar "/alunos"
+    User->>Browser: Acessa "/alunos"
     Browser->>Flask: GET "/alunos"
-    Flask->>DB: Criar sessão com SQLAlchemy
-    Flask->>DB: session.query(Aluno).all()
+    Flask->>DB: Buscar todos os alunos
     DB-->>Flask: Retorna lista de alunos
     Flask->>Browser: render_template('listaalunos.html', alunos=alunos)
+
+    User->>Browser: Clica em "Remover"
+    Browser->>Flask: GET "/remover_aluno/<id>"
+    Flask->>DB: Buscar aluno por ID
+    Flask->>Flask: session.delete(aluno)
+    Flask->>DB: session.commit()
+    DB-->>Flask: Confirmação de deleção
+    Flask->>Browser: redirect(url_for('listar_alunos'))
+
+    User->>Browser: Clica em "Alterar"
+    Browser->>Flask: GET "/editar/<id>"
+    Flask->>DB: Buscar aluno por ID
+    DB-->>Flask: Retorna dados do aluno
+    Flask->>Browser: render_template('editar_aluno.html', aluno=aluno)
+
+    User->>Browser: Submete formulário de edição
+    Browser->>Flask: POST "/editar/<id>"
+    Flask->>Flask: Atualizar dados do aluno
+    Flask->>DB: session.commit()
+    DB-->>Flask: Confirmação de atualização
+    Flask->>Browser: redirect(url_for('listar_alunos'))
 ```
 
 
@@ -99,4 +118,4 @@ Contribuições são bem-vindas! Sinta-se à vontade para enviar pull requests o
 
 ## Licença
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
+Este projeto está licenciado sob a [Apache License](LICENSE).

@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request,redirect,url_for
 # Importa a função `sessionmaker`, que é usada para criar uma nova sessão para interagir com o banco de dados
 from sqlalchemy.orm import sessionmaker
 
@@ -19,7 +19,7 @@ import urllib.parse
 # Qual o usuário do banco e a senha?
 
 user = 'root'
-password = urllib.parse.quote_plus('senai@123')
+password = urllib.parse.quote_plus('1234')
 
 host = 'localhost'
 database = 'schooltracker'
@@ -31,17 +31,17 @@ metadata = MetaData()
 metadata.reflect(engine)
 
 # Mapeamento automático das tabelas para classes Python
-Base = automap_base(metadata=metadata)
-Base.prepare()
+base = automap_base(metadata=metadata)
+base.prepare()
 
 # Acessando a tabela 'aluno' mapeada
-Aluno = Base.classes.aluno
+Aluno = base.classes.aluno
 
 
 
 # Criar a sessão do SQLAlchemy
-Session = sessionmaker(bind=engine)
-session = Session()
+session = sessionmaker(bind=engine)
+session = session()
 
 
 @app.route("/")
@@ -67,26 +67,64 @@ def inserir_aluno():
        session.commit() 
     except:
        session.rollback() 
+       raise
     finally:
        session.close()
     mensagem = "cadastrado com sucesso"
-    return render_template('listaalunos.html',mensagem=mensagem)
+    return redirect(url_for('listar_alunos'))
 
-@app.route('/alunos', methods=['GET'])
+# Pegar todos os alunos do banco e mostrar no table HTML
+# A - POST  B - GET  C - PUT  D- DELETE E - PRINT
+@app.route('/alunos',methods=['GET'])
 def listar_alunos():
     try:
-        alunos = session.query(Aluno).all()
+      #buscar todos os alunos do banco de dados
+      alunos = session.query(Aluno).all()
     except:
-        session.rollback()
-        msg = "erro ao tentar recupear a lista de alunos"
-        return render_template('index.html',msgbanco=msg )
+      session.rollback()
+      msg = "erro ao tentar recuperar a lista de alunos"
+      return render_template('index.html',msgbanco=msg)  
     finally:
-        session.close()
+      session.close()
 
     return render_template('listaalunos.html',alunos=alunos)
+
+@app.route("/remover_aluno/<int:id>",methods=["POST","GET"])
+def remover_aluno(id):
+     aluno = session.query(Aluno).filter_by(id=id).first() 
+     
+     try:
+          session.delete(aluno)
+          session.commit()
+          return redirect(url_for("listar_alunos"))
+     except:
+             print("erro ao deletar nível")
+     return redirect(url_for('listar_alunos'))
+
+@app.route('/editar/<int:id>', methods=['GET', 'POST'])
+def editar_aluno(id):
+    aluno = session.query(Aluno).get(id)
+    if request.method == 'POST':
+        aluno.ra = request.form['ra']
+        aluno.nome = request.form['nome']
+        aluno.tempoestudo = request.form['tempoestudo']
+        aluno.rendafamiliar = request.form['rendafamiliar']
+
+        try:
+            session.commit()
+            mensagem = "Dados atualizados com sucesso"
+        except:
+            session.rollback()
+            mensagem = "Erro ao atualizar dados"
+        finally:
+            session.close()
+
+        return redirect(url_for('listar_alunos', mensagem=mensagem))
+
+    return render_template('editar_aluno.html', aluno=aluno)
 
 
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5001)

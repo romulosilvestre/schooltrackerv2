@@ -1,34 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylelista.css') }}">
     <title>Lista de Alunos</title>
 </head>
-
 <body>
-    <h1>Lista de Alunos Cadastrados</h1>
-    {%if alunos%}
-    <table border="500">
-         <tr>  <!-- table row -->
-            <th>ra</th> <!-- table head -->
-            <th>nome</th>
-            <th>tempo estudo</th>
-            <th>renda familiar</th>
-        </tr>
-        {%for aluno in alunos%}
-        <tr>
-            <td>{{aluno.ra}}</td>
-            <td>{{aluno.nome}}</td>
-            <td>{{aluno.tempoestudo}}</td>
-            <td>{{aluno.rendafamiliar}}</td>
-        </tr>
-        {%endfor%}
-    </table>
-    {%else%}
-        <p>Nenhum alunos cadastrado!</p>
-    {%endif%}
-</body>
 
+    <h1>Lista de Alunos InovaTech</h1>
+  
+    {% if alunos %}
+    <table border="1">
+         <tr>
+           <th>ra</th>
+           <th>nome</th>
+           <th>tempo estudo</th>
+           <th>renda familiar</th>
+           <th>ações</th> <!-- Mudando o cabeçalho para "ações" -->
+         </tr>
+         {% for aluno in alunos %}
+           <tr>
+             <td>{{ aluno.ra }}</td>
+             <td>{{ aluno.nome }}</td>
+             <td>{{ aluno.tempoestudo }} horas</td>
+             <td>R$ {{ aluno.rendafamiliar }}</td>
+             <td>
+                 <a href="{{ url_for('editar_aluno', id=aluno.id) }}">alterar</a> | <!-- Adicionando o botão "alterar" -->
+                 <a href="#modal{{ aluno.id }}">remover</a> <!-- Botão "remover" existente -->
+             </td>
+           </tr>
+
+           <!-- Modal para confirmar deleção -->
+           <div id="modal{{ aluno.id }}" class="modal">
+               <div class="modal-content">
+                   <span class="close">&times;</span>
+                   <h2>Confirmação</h2>
+                   <p>Você tem certeza que deseja deletar este aluno?</p>
+                   <a href="{{ url_for('remover_aluno', id=aluno.id) }}" class="modal-button confirm">Sim</a>
+                   <a href="#" class="modal-button cancel">Não</a>
+               </div>
+           </div>
+         {% endfor %}
+    </table>
+    {% else %}
+        <p>Nenhum aluno cadastrado</p>
+    {% endif %}
+    
+</body>
 </html>
