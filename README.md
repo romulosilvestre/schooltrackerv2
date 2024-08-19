@@ -1,6 +1,5 @@
-# Projeto SchoolTracker
-
-Projeto SchoolTracker é uma aplicação desenvolvida no Senai Taguatinga utilizando Python e Flask. O objetivo do projeto é permitir a adição de estudantes a um banco de dados, possibilitar a criação de diários de bordo para registrar as aulas, e permitir que os dados dos alunos sejam alterados ou removidos conforme necessário.
+# Projeto Diário
+Projeto diário é uma aplicação desenvolvida no Senai Taguatinga utilizando Python e Flask. O objetivo do projeto é permitir a adição de estudantes a um banco de dados, possibilitar a criação de diários de bordo para registrar as aulas, e permitir que os dados dos alunos sejam alterados ou removidos conforme necessário.
 
 ## Funcionalidades
 
@@ -23,12 +22,12 @@ Projeto SchoolTracker é uma aplicação desenvolvida no Senai Taguatinga utiliz
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/henriqueserafin/projeto-schooltracker.git
+    git clone https://github.com/henriqueserafin/projeto-diario.git
     ```
 
 2. Navegue até o diretório do projeto:
     ```bash
-    cd projeto-schooltracker
+    cd projeto-diario
     ```
 
 3. Crie um ambiente virtual e ative-o:
