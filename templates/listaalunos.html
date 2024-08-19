@@ -17,7 +17,7 @@
            <th>nome</th>
            <th>tempo estudo</th>
            <th>renda familiar</th>
-           <th>ações</th> <!-- Mudando o cabeçalho para "ações" -->
+           <th>ações</th> 
          </tr>
          {% for aluno in alunos %}
            <tr>
@@ -26,8 +26,8 @@
              <td>{{ aluno.tempoestudo }} horas</td>
              <td>R$ {{ aluno.rendafamiliar }}</td>
              <td>
-                 <a href="{{ url_for('editar_aluno', id=aluno.id) }}">alterar</a> | <!-- Adicionando o botão "alterar" -->
-                 <a href="#modal{{ aluno.id }}">remover</a> <!-- Botão "remover" existente -->
+                 <a href="{{ url_for('editar_aluno', id=aluno.id) }}">alterar</a> | 
+                 <a href="#modal{{ aluno.id }}">remover</a> 
              </td>
            </tr>
 

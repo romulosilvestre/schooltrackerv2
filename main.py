@@ -19,7 +19,7 @@ import urllib.parse
 # Qual o usuário do banco e a senha?
 
 user = 'root'
-password = urllib.parse.quote_plus('1234')
+password = urllib.parse.quote_plus('senai@123')
 
 host = 'localhost'
 database = 'schooltracker'
@@ -73,8 +73,6 @@ def inserir_aluno():
     mensagem = "cadastrado com sucesso"
     return redirect(url_for('listar_alunos'))
 
-# Pegar todos os alunos do banco e mostrar no table HTML
-# A - POST  B - GET  C - PUT  D- DELETE E - PRINT
 @app.route('/alunos',methods=['GET'])
 def listar_alunos():
     try:
