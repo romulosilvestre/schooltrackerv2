@@ -3,14 +3,15 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.automap import automap_base
 import urllib.parse
+from gtts import gTTS
 
 app = Flask(__name__)
 
 # Configuração do Banco de Dados
 user = 'root'
-password = urllib.parse.quote_plus('1234')
+password = urllib.parse.quote_plus('senai@123')
 host = 'localhost'
-database = 'schooltracker'
+database = 'schooltrackerv2'
 connection_string = f'mysql+pymysql://{user}:{password}@{host}/{database}'
 
 engine = create_engine(connection_string)
@@ -115,6 +116,27 @@ def editar_aluno(id):
         return redirect(url_for('listar_alunos', mensagem=mensagem))
 
     return render_template('editar_aluno.html', aluno=aluno)
+
+@app.route('/menu')
+def ver_menu():
+    return render_template('menu.html')
+
+@app.route('/pesquisara',methods=['POST'])
+def pesquisar_ra():
+    pesquisa = request.form['pesquisa_ra']
+    return f"rota pesquisa funcionou! {pesquisa}"
+
+
+@app.route('/assistente',methods=['GET','POST'])
+def abrir_assistente():
+    audio_path = None
+    if request.method == 'POST':
+        texto = request.form['texto']
+        idioma = 'pt'
+        tts = gTTS(text=texto,lang=idioma)
+        audio_path='static/audio_exemplo.mp3'
+        tts.save(audio_path)
+    return render_template('assistente.html',audio_path=audio_path)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

@@ -7,7 +7,14 @@
     <title>Lista de Alunos</title>
 </head>
 <body>
+     
 
+    <div id="area_pesquisa">
+      <form action="/pesquisara" method="post">
+           digite o RA:  <input type="text" name="pesquisa_ra">
+           <input type="submit" value="pesquisar">
+      </form>
+    </div>
     <h1>Lista de Alunos InovaTech</h1>
   
     {% if alunos %}
